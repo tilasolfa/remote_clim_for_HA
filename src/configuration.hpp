@@ -4,8 +4,8 @@
 #define DEV
 // #define PROD
 
-// #define KITCHEN
-// #define LIVING
+// #define KITCHEN_AC
+// #define LIVING_AC
 #define PLAYGROUND
 
 #endif /* CONFIGURATION_HPP */
