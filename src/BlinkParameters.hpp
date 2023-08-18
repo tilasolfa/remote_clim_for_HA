@@ -1,5 +1,3 @@
-#ifndef D513452E_BD8D_485E_B531_FE9EB9CFB2F7
-#define D513452E_BD8D_485E_B531_FE9EB9CFB2F7
 #ifndef BLINKER_PARAMETERS_HPP
 #define BLINKER_PARAMETERS_HPP
 
@@ -25,6 +23,3 @@ static BlinkParameters sensor_is_offline(20, 30, 250);
 static BlinkParameters data_publication_done(5, 30, 50);
 
 #endif /* BLINKER_PARAMETERS_HPP */
-
-
-#endif /* D513452E_BD8D_485E_B531_FE9EB9CFB2F7 */
