@@ -11,12 +11,12 @@
 #include <ir_Toshiba.h>
 
 //
-#include "ac.hpp"
 #include "blink.hpp"
 #include "constants.hpp"
 #include "devices.hpp"
 #include "mqtt.hpp"
 // espPlayground
+// espKitchenAC
 
 WiFiClient espClient;
 PubSubClient mqttClient(espClient);
@@ -62,8 +62,12 @@ void setup() {
 void loop() {
     if (!mqttClient.connected()) {
         if (reconnect()) {
-            mqttClient.subscribe(HA_request_configure_AC_fresh_default);
+            mqttClient.subscribe(HA_request_AC_on);
             mqttClient.subscribe(HA_request_AC_off);
+            mqttClient.subscribe(HA_request_temperature_value);
+            mqttClient.subscribe(HA_request_a_c_mode);
+            mqttClient.subscribe(HA_request_a_c_fan_speed);
+            mqttClient.subscribe(HA_request_a_c_fan_swing);
         }
     }
     mqttClient.loop();
