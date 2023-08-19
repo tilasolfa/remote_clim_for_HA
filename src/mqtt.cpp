@@ -28,25 +28,24 @@ void ac_send() {
 #endif
 }
 
-void callback(char* topic, uint8_t* payload, unsigned int length) {
+void callback(char* topic, uint8_t* payload, unsigned int payload_size) {
     Serial.print("callback : Message arrived [");
     Serial.print(topic);
     Serial.println("] ");
-    size_t payload_size = sizeof(payload);                                 // TODO : pourquoi si on met sizeof(payload) au lieu de le calculer en amont, on a un warning ?
-    if (memcmp(HA_request_AC_on, topic, sizeof(HA_request_AC_on)) == 0) {  // ON
+    if (strcmp(HA_request_AC_on, topic) == 0) {  // ON // TODO : remplacer par strcmp
         Serial.println("HA request AC on");
         ac.on();
         ac_send();
-    } else if (memcmp(HA_request_AC_off, topic, sizeof(HA_request_AC_off)) == 0) {  // OFF
+    } else if (strcmp(HA_request_AC_off, topic) == 0) {  // OFF
         Serial.println("HA request AC off");
         ac.off();
         ac_send();
-    } else if (memcmp(HA_request_temperature_value, topic, sizeof(HA_request_temperature_value)) == 0) {  // temperature
-        char payloadStr[payload_size];
+    } else if (strcmp(HA_request_temperature_value, topic) == 0) {  // temperature
+        char payloadStr[payload_size + 1];
         for (size_t i = 0; i < payload_size; ++i) {
-            payloadStr[i] = static_cast<char>(payload[i]);
+            payloadStr[i] = payload[i];
         }
-        payloadStr[payload_size - 1] = '\0';
+        payloadStr[payload_size] = '\0';
 
         int target_temperature = atoi(payloadStr);
 
@@ -57,7 +56,7 @@ void callback(char* topic, uint8_t* payload, unsigned int length) {
             ac_send();
         }
 
-    } else if (memcmp(HA_request_a_c_mode, topic, sizeof(HA_request_a_c_mode)) == 0) {  // mode
+    } else if (strcmp(HA_request_a_c_mode, topic) == 0) {  // mode
         if (memcmp("Auto", payload, payload_size) == 0) {
             Serial.println("A/C mode request : auto");
             ac.setMode(kToshibaAcAuto);
@@ -66,7 +65,7 @@ void callback(char* topic, uint8_t* payload, unsigned int length) {
             Serial.println("A/C mode request : cool");
             ac.setMode(kToshibaAcCool);
             ac_send();
-        } else if (memcmp("Dry", payload, payload_size) == 0) {  // TODO : ce mode ne fonctionne pas : sizeof("Dry") ?
+        } else if (memcmp("Dry", payload, payload_size) == 0) {
             Serial.println("A/C mode request : dry");
             ac.setMode(kToshibaAcDry);
             ac_send();
@@ -74,12 +73,12 @@ void callback(char* topic, uint8_t* payload, unsigned int length) {
             Serial.println("A/C mode request : heat");
             ac.setMode(kToshibaAcHeat);
             ac_send();
-        } else if (memcmp("Fan", payload, payload_size) == 0) {  // TODO : ce mode ne fonctionne pas : sizeof("Fan") ?
+        } else if (memcmp("Fan", payload, payload_size) == 0) {
             Serial.println("A/C mode request : fan");
             ac.setMode(kToshibaAcFan);
             ac_send();
         }
-    } else if (memcmp(HA_request_a_c_fan_speed, topic, sizeof(HA_request_a_c_fan_speed)) == 0) {  // fan speed
+    } else if (strcmp(HA_request_a_c_fan_speed, topic) == 0) {  // fan speed
         if (memcmp("Auto", payload, payload_size) == 0) {
             Serial.println("Fan speed request : auto");
             ac.setFan(kToshibaAcFanAuto);
@@ -100,8 +99,8 @@ void callback(char* topic, uint8_t* payload, unsigned int length) {
                 ac_send();
             }
         }
-    } else if (memcmp(HA_request_a_c_fan_swing, topic, sizeof(HA_request_a_c_fan_swing)) == 0) {  // swing
-        if (memcmp("On", payload, 3) == 0) {                                                      // TODO : pourquoi est-on obligés de mettre 3 et pas sizeof(payload) ?
+    } else if (strcmp(HA_request_a_c_fan_swing, topic) == 0) {  // swing
+        if (memcmp("On", payload, payload_size) == 0) {
             Serial.println("Fan swing request : on");
             ac.setSwing(kToshibaAcSwingOn);
             ac_send();
