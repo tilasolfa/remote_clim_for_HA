@@ -105,5 +105,9 @@ void callback(char* topic, uint8_t* payload, unsigned int payload_size) {
             ac.setSwing(kToshibaAcSwingOff);
             ac_send();
         }
+    } else if (strcmp(HA_request_a_c_fan_swing_step, topic) == 0) {  // simple swing step
+        Serial.println("HA request simple swing step");
+        ac.setSwing(kToshibaAcSwingStep);
+        ac_send();
     }
 }

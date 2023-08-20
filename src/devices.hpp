@@ -13,6 +13,7 @@ const char HA_request_temperature_value[] = "homeassistant/kitchen_ac/HA_request
 const char HA_request_a_c_mode[] = "homeassistant/kitchen_ac/HA_request_a_c_mode";
 const char HA_request_a_c_fan_speed[] = "homeassistant/kitchen_ac/HA_request_a_c_fan_speed";
 const char HA_request_a_c_fan_swing[] = "homeassistant/kitchen_ac/HA_request_a_c_fan_swing";
+const char HA_request_a_c_fan_swing_step[] = "homeassistant/kitchen_ac/HA_request_a_c_fan_swing_step";
 #endif
 
 #ifdef PLAYGROUND

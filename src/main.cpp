@@ -68,6 +68,7 @@ void loop() {
             mqttClient.subscribe(HA_request_a_c_mode);
             mqttClient.subscribe(HA_request_a_c_fan_speed);
             mqttClient.subscribe(HA_request_a_c_fan_swing);
+            mqttClient.subscribe(HA_request_a_c_fan_swing_step);
         }
     }
     mqttClient.loop();
